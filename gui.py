@@ -2,6 +2,7 @@
 期货数据管理系统图形化界面
 """
 import tkinter as tk
+import logging
 from tkinter import ttk, filedialog, messagebox, scrolledtext
 import threading
 from datetime import datetime, timedelta
@@ -28,13 +29,17 @@ class FuturesDataGUI:
     """期货数据管理系统GUI"""
     
     def __init__(self):
+        self.logger = logging.getLogger(__name__)
+        self.status_label = None #避免未初始化
         self.root = ThemedTk(theme="arc")
         self.root.title(GUI_CONFIG['window_title'])
         self.root.geometry(GUI_CONFIG['window_size'])
         
+        
         # 初始化变量
         self.current_data = pd.DataFrame()
         self.chart_frame = None
+            self.create_widgets()
         
         # 设置样式
         self.setup_styles()
